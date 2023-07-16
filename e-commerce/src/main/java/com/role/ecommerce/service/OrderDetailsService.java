@@ -9,6 +9,8 @@ import com.role.ecommerce.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -27,6 +29,31 @@ public class OrderDetailsService {
 
     @Autowired
     private UserDao userDao;
+
+
+    public void markOrderAsDelivered(Integer orderId){
+        OrderDetail orderDetail =orderDetailsDao.findById(orderId).get();
+        if(orderDetail!= null){
+            orderDetail.setOrderStatus(("Delivered"));
+            orderDetailsDao.save(orderDetail);
+        }
+
+    }
+
+
+    public List<OrderDetail> getAllOrderDetails(String status){
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        if(status.equals("All")){
+            orderDetailsDao.findAll().forEach(
+                    x-> orderDetails.add(x)
+            );
+        } else {
+            orderDetailsDao.findByOrderStatus(status).forEach(
+                    x-> orderDetails.add(x)
+            );
+        }
+        return orderDetails;
+    }
 
 
     public List<OrderDetail> getOrderDetails(){
