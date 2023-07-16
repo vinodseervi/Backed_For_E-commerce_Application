@@ -5,6 +5,7 @@ import com.role.ecommerce.entity.JwtRequest;
 import com.role.ecommerce.entity.JwtResponse;
 import com.role.ecommerce.entity.User;
 import com.role.ecommerce.util.JwtUtil;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,7 +32,8 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
+    public JwtResponse createJwtToken(@NotNull JwtRequest jwtRequest) throws Exception {
+        System.out.println("hello create token");
         String userName = jwtRequest.getUserName();
         String userPassword = jwtRequest.getUserPassword();
         authenticate(userName, userPassword);
@@ -40,6 +42,8 @@ public class JwtService implements UserDetailsService {
         String newGeneratedToken = jwtUtil.generateToken(userDetails);
 
         User user = userDao.findById(userName).get();
+        System.out.println(user.getUserName());
+        System.out.println(newGeneratedToken);
         return new JwtResponse(user, newGeneratedToken);
     }
 

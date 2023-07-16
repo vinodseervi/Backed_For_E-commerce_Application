@@ -8,8 +8,8 @@ import java.util.Set;
 public class User {
     @Id
     private String userName;
-    private String UserFirstName;
-    private String UserLastName;
+    private String userFirstName;
+    private String userLastName;
     private String userPassword;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -31,19 +31,19 @@ public class User {
     }
 
     public String getUserFirstName() {
-        return UserFirstName;
+        return userFirstName;
     }
 
     public void setUserFirstName(String userFirstName) {
-        UserFirstName = userFirstName;
+        this.userFirstName = userFirstName;
     }
 
     public String getUserLastName() {
-        return UserLastName;
+        return userLastName;
     }
 
     public void setUserLastName(String userLastName) {
-        UserLastName = userLastName;
+        this.userLastName = userLastName;
     }
 
     public String getUserPassword() {

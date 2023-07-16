@@ -1,6 +1,7 @@
 package com.role.ecommerce.service;
 
 import com.role.ecommerce.configuration.JwtRequestFilter;
+import com.role.ecommerce.dao.CartDao;
 import com.role.ecommerce.dao.OrderDetailsDao;
 import com.role.ecommerce.dao.ProductDao;
 import com.role.ecommerce.dao.UserDao;
@@ -22,8 +23,22 @@ public class OrderDetailsService {
     private ProductDao productDao;
 
     @Autowired
+    private CartDao cartDao;
+
+    @Autowired
     private UserDao userDao;
-    public void placeOrder(OrderInput orderInput){
+
+
+    public List<OrderDetail> getOrderDetails(){
+        String currentUser = JwtRequestFilter.CURRENT_USER;
+        User user = userDao.findById(currentUser).get();
+
+        return orderDetailsDao.findByUser(user);
+
+    }
+
+
+    public void placeOrder(OrderInput orderInput, boolean isSingleProductCheckout){
         List<OrderProductQuantity> ProductQuantityList =  orderInput.getOrderProductQuantityList();
         for(OrderProductQuantity o: ProductQuantityList){
             Product product =  productDao.findById(o.getProductId()).get();
@@ -40,6 +55,12 @@ public class OrderDetailsService {
                     user
 
             );
+
+            //empty the cart.
+            if(!isSingleProductCheckout){
+               List<Cart> carts =  cartDao.findByUser(user);
+               carts.stream().forEach(x-> cartDao.deleteById(x.getCartId()));
+            }
 
             orderDetailsDao.save(orderDetail);
         }

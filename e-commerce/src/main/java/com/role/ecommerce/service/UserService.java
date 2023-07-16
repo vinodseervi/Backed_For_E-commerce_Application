@@ -28,6 +28,10 @@ public class UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setRole(roles);
+        System.out.println(user.getUserName());
+        System.out.println(user.getUserPassword());
+        System.out.println(user.getUserLastName());
+        System.out.println(user.getUserFirstName());
 
         user.setUserPassword(getEncodedPassword(user.getUserName()));
         return userDao.save(user);
