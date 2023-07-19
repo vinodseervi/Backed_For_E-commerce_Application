@@ -3,6 +3,7 @@ package com.ecommerce.controller;
 import com.ecommerce.dao.OrderDetailsDao;
 import com.ecommerce.entity.OrderDetail;
 import com.ecommerce.entity.OrderInput;
+import com.ecommerce.entity.TransactionDetails;
 import com.ecommerce.service.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +42,13 @@ public class OderDetailsController {
     @GetMapping({"/markOrderAsDelivered/{orderId}"})
     public void markOrderAsDelivered(@PathVariable(name = "orderId") Integer orderId){
         orderDetailService.markOrderAsDelivered(orderId);
+    }
+
+    @PreAuthorize("hasRole('User')")
+    @GetMapping({"/createTransaction/{amount}"})
+    public TransactionDetails createTransaction(@PathVariable(name = "amount") Double amount){
+       return orderDetailService.createTransaction(amount);
+
     }
 
 
