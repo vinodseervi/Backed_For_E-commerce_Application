@@ -13,6 +13,8 @@ public class OrderDetail {
     private String orderAlternativeContactNumber;
     private String orderStatus;
     private Double orderAmount;
+
+    private String transactionId;
     @OneToOne
     private Product product;
     @OneToOne
@@ -21,13 +23,14 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(String oderFullName, String orderFullOrder, String orderContactNumber, String orderAlternativeContactNumber, String orderStatus, Double orderAmount, Product product, User user) {
+    public OrderDetail(String oderFullName, String orderFullOrder, String orderContactNumber, String orderAlternativeContactNumber, String orderStatus, Double orderAmount, String transactionId, Product product, User user) {
         this.oderFullName = oderFullName;
         this.orderFullOrder = orderFullOrder;
         this.orderContactNumber = orderContactNumber;
         this.orderAlternativeContactNumber = orderAlternativeContactNumber;
         this.orderStatus = orderStatus;
         this.orderAmount = orderAmount;
+        this.transactionId = transactionId;
         this.product = product;
         this.user = user;
     }
@@ -102,5 +105,13 @@ public class OrderDetail {
 
     public void setOrderAmount(Double orderAmount) {
         this.orderAmount = orderAmount;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }

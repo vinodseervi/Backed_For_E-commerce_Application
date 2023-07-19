@@ -8,6 +8,8 @@ public  class OrderInput {
     private String gmail;
     private String contactNumber;
     private String alternativeContactNumber;
+
+    private String transactionId;
     private List<OrderProductQuantity> orderProductQuantityList;
 
     public String getGmail() {
@@ -57,5 +59,13 @@ public  class OrderInput {
 
     public void setOrderProductQuantityList(List<OrderProductQuantity> orderProductQuantityList) {
         this.orderProductQuantityList = orderProductQuantityList;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }
