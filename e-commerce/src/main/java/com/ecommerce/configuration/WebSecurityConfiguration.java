@@ -15,9 +15,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -36,11 +38,24 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    public static final String[] PUBLIC_URLS = {
+            "/authenticate",
+            "/registerNewUser",
+            "/getAllProducts",
+            "/getProductDetailsById/{productId}",
+            "/v3/api-docs",
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "webjars/**"
+    };
+
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate", "/registerNewUser","/getAllProducts","/getProductDetailsById/{productId}").permitAll()
+                .authorizeRequests().antMatchers(PUBLIC_URLS).permitAll()
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()
                 .and()
